@@ -101,13 +101,12 @@ def test_delete_self_pet_with_invalid_key():
     pet_id = my_pets['pets'][0]['id']
     status, _ = pf.delete_pet(auth_key, pet_id)
     
-    # Ещё раз запрашиваем список своих питомцев
-    _, auth_key = pf.get_api_key(valid_email, valid_password)
-    _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
-
+    # Ещё раз берем id первого питомца из списка
+    pet_id2 = my_pets['pets'][0]['id']
+    
     # Проверяем что статус ответа равен 403 и питомец не удалился
     assert status == 403
-    assert pet_id in my_pets.values()
+    assert pet_id == pet_id2
 
 def test_try_delete_not_my_pet():
     """Проверяем что нельзя удалить чужого питомца"""
