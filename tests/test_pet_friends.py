@@ -39,7 +39,7 @@ def test_try_delete_not_my_pet():
     # Получаем ключ auth_key и запрашиваем список всех питомцев и список своих питомцев
     _, auth_key = pf.get_api_key(valid_email, valid_password)
     _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
-    _, all_pets = pf.get_list_of_pets(auth_key, filter='')
+    _, all_pets = pf.get_list_of_pets(auth_key)
 
     # Если у меня есть питомцы
     if len(my_pets['pets']) > 0:
@@ -51,7 +51,7 @@ def test_try_delete_not_my_pet():
             status, _ = pf.delete_pet(auth_key, pet_id)
 
             # Ещё раз запрашиваем список всех питомцев
-            _, all_pets = pf.get_list_of_pets(auth_key, filter='')
+            _, all_pets = pf.get_list_of_pets(auth_key)
 
             # Проверяем что статус ответа не равен 200 и в списке питомцев остался питомец
             assert status == 200
@@ -67,7 +67,7 @@ def test_try_delete_not_my_pet():
         status, _ = pf.delete_pet(auth_key, pet_id)
 
         # Ещё раз запрашиваем список всех питомцев
-        _, all_pets = pf.get_list_of_pets(auth_key, filter='')
+        _, all_pets = pf.get_list_of_pets(auth_key)
 
         # Проверяем что статус ответа равен 200 и в списке не остался питомец
         assert status == 200
@@ -79,7 +79,7 @@ def test_update_not_my_pet_info(name='тест', animal_type='тестовый',
 
     # Получаем ключ auth_key и запрашиваем список всех питомцев и список своих питомцев
     _, auth_key = pf.get_api_key(valid_email, valid_password)
-    _, all_pets = pf.get_list_of_pets(auth_key, filter='')
+    _, all_pets = pf.get_list_of_pets(auth_key)
     _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
 
     # Если у меня есть питомцы
@@ -248,6 +248,14 @@ def test_add_pet_photo_with_invalid_file(pet_photo='images/test_txt.txt'):
         raise Exception("There is no my pets")
 
 
+        
+        
+        
+        
+        
+        
+        
+        
 # __________________________Ниже тесты из модуля + два из ДЗ____________________________________________
 
 def test_get_api_key_for_valid_user(email=valid_email, password=valid_password):
